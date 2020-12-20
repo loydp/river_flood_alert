@@ -1,11 +1,11 @@
-import numpy as p
 import pandas as pd
+import time
 SVPA_test_url = "https://water.weather.gov/ahps2/hydrograph_to_xml.php?gage=CRNW1&output=tabular"
 
 
 GAGES = [
         ('SQUW1', 'USGS-38', '12144500','Snoqualmie River - Below the Falls', [15, 20, 31, 41], 'https://water.weather.gov/ahps2/hydrograph.php?wfo=sew&gage=squw1'),
-        ('CRNW1', 'USGS-22', '12149000' 'Snoqualmie River near Carnation', [50.7, 54, 56, 58], 'https://water.weather.gov/ahps2/hydrograph.php?wfo=sew&gage=CRNW1'),
+        ('CRNW1', 'USGS-22', '12149000', 'Snoqualmie River near Carnation', [50.7, 54, 56, 58], 'https://water.weather.gov/ahps2/hydrograph.php?wfo=sew&gage=CRNW1'),
         ('CRNZ1', 'USGS-9', '12150400', 'Snoqualmie River at Duvall', None, 'https://water.weather.gov/ahps2/hydrograph.php?wfo=sew&gage=CRNZ1')
         ]
 
@@ -24,45 +24,26 @@ class Gage:
 class FloodAlertBot:
 
     def __init__(self):
-        gage_list = []
+        self.gage_list = []
         print('GetUSGS initialized')
 
-    def input_gages(self, gage_list):
-        for gage in gage_list:
-            name1, name2, GIN, desc, thresholds, url = gage
+    def input_gages(self, gages):
+        for gage_item in gages:
+            name1, name2, GIN, desc, thresholds, url = gage_item
             new_gage = Gage(name1, name2, GIN, desc, thresholds, url)
-            gage_list.append(new_gage)
+            self.gage_list.append(new_gage)
 
+    def run(self):
+        for x in range(10):
+            time.sleep(WAIT_TIME)
+            self.print_stuff()
+
+    def print_stuff(self):
+        print('stuff')
+
+WAIT_TIME = 5
 
 if __name__ == '__main__':
     FAB = FloodAlertBot()
     FAB.input_gages(GAGES)
-
-
-
-    # svpa = data_get.get_SVPA_reading(USGS_test_url)
-    # usgs = data_get.get_USGS_reading(SVPA_test_url)
-    
-    # print(usgs[1])
-    # print(svpa['readings'][2])
-    
-'''
-
-USGS_test_url = "https://readingsvc.azurewebsites.net/api/GetGageReadingsUTC?regionId=1&id=SVPA-17&fromDateTime=2020-01-06T16:00:07-08:00&toDateTime=2020-01-10T16:00:07-08:00&showDeletedReadings=false"
-
-    def get_USGS_reading(self, url):
-        try:
-            df_list = pd.read_html(url)
-            return df_list
-        except Exception as e:
-            print("Error in GetUSGS, get_USGS:\n", e)
-            return None
-
-    def get_SVPA_reading(self, url):
-        try:
-            df_list = pd.read_json(url)
-            return df_list
-        except Exception as e:
-            print("Error in GetSVPA, get_SVPA:\n", e)
-            return None
-'''
+    FAB.run()
