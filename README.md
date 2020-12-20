@@ -2,21 +2,23 @@ Snowqualmie Valley Preservation Alliance Flood Alert Bot
 ========================================================
 
 ### GENERAL NOTES:
-The flooding alert bot gathers data from water guages, and digests and moves that data to people who need to know it.
-Specifically the current iteration should interact with a Discord bot to communicate with people using discord or maybe email.
-<br>**2020-12-18**
+The flood alert bot gathers data from water gages, digests that data and moves it to the people who need to know it.<br>
+The program should also be fairly portable/abstract/OO, to allow for it to be adapted to new systems.<br>
+The current iteration should interact with a Discord bot to communicate with people using discord or email.<br>
+<br>**2020-12-19**
 
 
 ### DEPENDENCIES:
 * tested on python 3.9
 * pandas
+* will need discord.py
 
-Currently requires pandas to read online data.
-May be used for series processing later.
-The latest version of windows has a bug that interacts poorly with numpy. So as of now if installing on a windows machine install pandas 1.1.3, which should install numpy 1.19.3.
-In terminal:
+Currently uses pandas to read tabular tables.  
+May be used for series processing later.  
+The latest version of windows has a bug that interacts poorly with numpy. So as of now if installing on a windows machine install pandas 1.1.3, which should install numpy 1.19.3.  
+In terminal:  
 pip install pandas==1.1.3
-<br>**2020-12-18**
+<br>**2020-12-19**
 
 
 ### DEVELOPER NOTES:
@@ -44,7 +46,7 @@ Classes:
 [x] Start up and wait_time.
 * Every wait_time amount of time, the process will do something
 
-[] On wait_time get data and print
+[x] On wait_time get data and print
 * print proof data is up to date, this likely means adding timestamp
 
 [] Find gages that are over minimum threshold and print something else
