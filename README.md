@@ -4,18 +4,19 @@ Snowqualmie Valley Preservation Alliance Flood Alert Bot
 ### GENERAL NOTES:
 The flooding alert bot gathers data from water guages, and digests and moves that data to people who need to know it.
 Specifically the current iteration should interact with a Discord bot to communicate with people using discord or maybe email.
-**2020-12-18**
+<br>**2020-12-18**
 
 
 ### DEPENDENCIES:
 * tested on python 3.9
 * pandas
+
 Currently requires pandas to read online data.
 May be used for series processing later.
 The latest version of windows has a bug that interacts poorly with numpy. So as of now if installing on a windows machine install pandas 1.1.3, which should install numpy 1.19.3.
 In terminal:
 pip install pandas==1.1.3
-**2020-12-18**
+<br>**2020-12-18**
 
 
 ### DEVELOPER NOTES:
@@ -66,9 +67,9 @@ Classes:
 
 
 ### **Notes and Detritus**
-tricky point:
-how do we for commands and timer at the same time.
-USGS says "Gage" instead of "Guage" for historical reasons
+Tricky point:
+* How do we wait for commands and timer at the same time: Selector or multithreading?
+* USGS says "Gage" instead of "Guage" for historical reasons
 
 USGS test
 https://water.weather.gov/ahps2/hydrograph_to_xml.php?guage=CRNW1&output=tabular
