@@ -11,7 +11,9 @@ The current iteration should interact with a Discord bot to communicate with peo
 ### DEPENDENCIES:
 * tested on python 3.9
 * pandas
+* lxml
 * will need discord.py
+
 
 Currently uses pandas to read tabular tables.  
 May be used for series processing later.  
@@ -46,8 +48,11 @@ Classes:
 [x] Start up and wait_time.
 * Every wait_time amount of time, the process will do something
 
-[x] On wait_time get data and print
+[] On wait_time get data and print
 * print proof data is up to date, this likely means adding timestamp
+
+[] On getting data, show last 10 and all predictions
+* show the gage, the last 10 readings, and all predictions
 
 [] Find gages that are over minimum threshold and print something else
 
@@ -82,7 +87,6 @@ https://readingsvc.azurewebsites.net/api/GetGuageReadingsUTC?regionId=1&id=SVPA-
 SQUW1
 CRNW1
 CRNZ1 
-
 
 
 **DETRITUS**
