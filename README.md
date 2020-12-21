@@ -48,11 +48,11 @@ Classes:
 [x] Start up and wait_time.
 * Every wait_time amount of time, the process will do something
 
-[] On wait_time get data and print
-* print proof data is up to date, this likely means adding timestamp
+[x] On wait_time update data (and print)
+* print proof data is up to date
 
-[] On getting data, show last 10 and all predictions
-* show the gage, the last 10 readings, and all predictions
+[] On getting data, show appropriate data
+* E.g. gage, last few readings, all predictions, summary
 
 [] Find gages that are over minimum threshold and print something else
 
@@ -116,4 +116,13 @@ USGS_test_url = "https://readingsvc.azurewebsites.net/api/GetGageReadingsUTC?reg
         except Exception as e:
             print("Error in GetSVPA, get_SVPA:\n", e)
             return None
+
+
+
+GAGES = [
+        ('SQUW1', 'USGS-38', '12144500','Snoqualmie River - Below the Falls', [15, 20, 31, 41], 'https://water.weather.gov/ahps2/hydrograph.php?wfo=sew&gage=squw1'),
+        ('CRNW1', 'USGS-22', '12149000', 'Snoqualmie River near Carnation', [50.7, 54, 56, 58], 'https://water.weather.gov/ahps2/hydrograph.php?wfo=sew&gage=CRNW1'),
+        ('CRNZ1', 'USGS-9', '12150400', 'Snoqualmie River at Duvall', None, 'https://water.weather.gov/ahps2/hydrograph.php?wfo=sew&gage=CRNZ1')
+        ]
+
 '''
