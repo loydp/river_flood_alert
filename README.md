@@ -51,8 +51,13 @@ Classes:
 [x] On wait_time update data (and print)
 * print proof data is up to date
 
-[] On getting data, show appropriate data
-* E.g. gage, last few readings, all predictions, summary
+[x] On getting data, show appropriate data
+* E.g. gage, last few readings, all predictions, summary:
+* Expected high point
+* Expected time above thresholds
+* relationship between high point and thresholds
+* Recent history.
+
 
 [] Find gages that are over minimum threshold and print something else
 
@@ -74,6 +79,9 @@ Classes:
 
 
 ### **Notes and Detritus**
+Max:
+https://www.kite.com/python/answers/how-to-find-the-max-value-of-a-pandas-dataframe-column-in-python
+
 Tricky point:
 * How do we wait for commands and timer at the same time: Selector or multithreading?
 * USGS says "Gage" instead of "Guage" for historical reasons
@@ -90,6 +98,9 @@ CRNZ1
 
 
 **DETRITUS**
+
+DF USGS
+* type: list
 
 '''
     # svpa = data_get.get_SVPA_reading(USGS_test_url)
