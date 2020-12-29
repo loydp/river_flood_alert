@@ -59,15 +59,12 @@ Classes:
 * Recent history.
 
 
-[] Find gages that are over minimum threshold and print something else
+[x] Find gages that are over minimum threshold and print something else
 
-[] On request provide data.
-* create functions to return data as needed
-
-[] instantiate multi-threading
+[x] instantiate multi-threading
 * Waits for requests, as timer is running
-* On request: locks data, accesses, unlocks, returns
-* Timer does same
+
+[] handle race conditions in threading via locking
 
 [] On startup, gages are read from a separate file.
 * "Gages.txt" file made, consisting of a list of gages.
@@ -76,6 +73,8 @@ Classes:
 * info held looks good
 * __str will return good info
 
+[] On request provide specific data.
+* create functions to return specific data as needed
 
 
 ### **Notes and Detritus**

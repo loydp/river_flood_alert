@@ -1,5 +1,6 @@
 import pandas as pd
 import time
+import threading
 
 
 GAGES = [
@@ -17,8 +18,8 @@ class Gage:
         Description
         Source URL
         Important information derived from the last reading
-    On update, updates itself.
-    Reports data.
+    On update(), updates itself.
+    Reports data on get_status().
     """
 
     def __init__(self, gage_ID, USGS_ID, USGS_num, desc, thresholds, url):
@@ -29,7 +30,7 @@ class Gage:
         self.description = desc         # SVPA Description
         self.thresholds = thresholds    # action thresholds
         self.url = url                  # data url
-        self.thresholds = []            # action thresholds
+        self.thresholds = thresholds    # action thresholds
 
         # information from the data
         self.last_height = None
@@ -47,7 +48,7 @@ class Gage:
         df_list = self.read_USGS_gage()
         self.last_time = df_list[1][0][2]
         self.last_height = df_list[1][2][2]
-        self.max_forecast_height, self.max_forecast_time = self.__get_max(df_list[1])
+        self.max_forecast_height, self.max_forecast_time = self.__get_max(df_list[2])
 
     def __get_max(self, df):
         max_index = None 
@@ -57,8 +58,7 @@ class Gage:
                 value = float(value_str[:-2])
                 if max_index == None or value > max_index:
                     max_index = i
-        print(df[2][max_index])
-        return (df[2][max_index], df[0][max_index])
+        return (float(df[2][max_index][:2]), df[0][max_index])
 
 
     def read_USGS_gage(self):
@@ -78,6 +78,9 @@ class Gage:
         """
         From the gage records return relevant information.
         """
+        # TODO throw an excption: must load gages first
+        if self.max_forecast_height > self.thresholds[0]:
+            return "Uh oh!"
         status = ''
         status += '{}\n'.format(self.description)
         status += '{} -- {} -- {}\n'.format(self.gage_ID, self.USGS_ID, self.USGS_num)
@@ -85,7 +88,14 @@ class Gage:
         status += '\tCurrent Time: {}\n'.format(time.strftime('%Y-%m-%d %H:%M %Z', time.localtime(time.time())))
         status += '\tLatest Time: {}\n'.format(self.last_time)
         status += '\tLatest Level: {}\n'.format(self.last_height)
-        status += '\tThe highest expected level is: {} at {}'.format(self.max_forecast_height, self.max_forecast_time)
+        # TODO something
+        '''
+        Latest Time: 12/29 06:30
+        Latest Level: 5.40ft
+        The highest expected level is: 5.0 at 12.0
+        '''
+        status += '\tThe highest expected level is: {} at {}\n'.format(self.max_forecast_height, self.max_forecast_time)
+        status += '\tWhere the thresholds are: {}'.format(self.thresholds)
         return status
 
 
@@ -94,6 +104,39 @@ class FloodAlertBot:
     def __init__(self):
         self.gage_list = []
 
+    def run(self):
+        """
+        The core loop. It waits a set amount of time, updates information,
+        then waits again.
+        #TODO
+        Initiates a second thread that responds to RPCs
+        """
+        server = threading.Thread(target=self.__remote_event)
+        server.start()
+        self.__timed_event()
+
+
+    def __timed_event(self):
+        # while true
+        for x in range(1):
+            self.update_USGS_gages()
+            statuses = self.get_USGS_statuses()
+            self.send_to_discord(statuses)
+            time.sleep(WAIT_TIME)
+
+
+    def send_to_discord(self, statuses):
+        #FIXME
+        print(statuses)
+
+
+    def __remote_event(self):
+        #while true
+        #accept incoming requests
+        print('remote event')
+        while True:
+            time.sleep(3)
+            self.send_to_discord('Hello')
 
     def input_gages(self, gages):
         """
@@ -108,24 +151,15 @@ class FloodAlertBot:
             self.gage_list.append(new_gage)
 
 
-    def run(self):
+    def get_USGS_statuses(self):
         """
-        The core loop. It waits a set amount of time, updates information,
-        then waits again.
-        #TODO
-        Initiates a second thread that responds to RPCs
+        Accesses and returns gage status information.
         """
-        for x in range(1):
-            self.update_USGS_gages()
-            self.print_USGS_statuses()
-            time.sleep(WAIT_TIME)
-
-    def print_USGS_statuses(self):
-        """
-        Prints out the status of each gage.
-        """
+        status = ''
         for gage in self.gage_list:
-            print(gage.get_status())
+            status += gage.get_status()
+        return status
+
 
     def update_USGS_gages(self):
         """
