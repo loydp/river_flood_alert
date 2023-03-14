@@ -1,0 +1,3 @@
+"SQUW1", "USGS-38", "12144500", "Snoqualmie River - Below the Falls", [15, 20, 31, 41,], "https://water.weather.gov/ahps2/hydrograph_to_xml.php?gage=squw1&output=tabular"
+"CRNW1", "USGS-22", "12149000", "Snoqualmie River near Carnation", [50.7, 54, 56, 58,], "https://water.weather.gov/ahps2/hydrograph_to_xml.php?gage=CRNW1&output=tabular"
+"CRNZ1", "USGS-9", "12150400", "Snoqualmie River at Duvall", None, "https://water.weather.gov/ahps2/hydrograph_to_xml.php?gage=CRNZ1&output=tabular"
